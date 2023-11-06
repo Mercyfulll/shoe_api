@@ -3,7 +3,7 @@ import axios from 'axios';
 export default function routes(db){
 
     async function home(req,res){
-        const data = await axios.get('http://localhost:3000/api/shoes')
+        const data = await axios.get( process.env.API_ENDPOINT || 'http://localhost:3000/api/shoes')
                     .then (function (response) {
                         // handle success
                         return response.data
@@ -19,7 +19,7 @@ export default function routes(db){
             console.log(brandTag)
 
             if(brandTag){
-               const brands = await axios.get(`http://localhost:3000/api/shoes/brand/${brandTag}`)
+               const brands = await axios.get( process.env.API_ENDPOINT || `http://localhost:3000/api/shoes/brand/${brandTag}`)
                                         .then(function (response){
                                             console.log(response.data)
                                         return response.data
@@ -42,7 +42,7 @@ export default function routes(db){
             const shoe_size = req.body.size
 
             if(shoe_size){
-                const sizes = await axios.get(`http://localhost:3000/api/shoes/size/${shoe_size}`)
+                const sizes = await axios.get( process.env.API_ENDPOINT || `http://localhost:3000/api/shoes/size/${shoe_size}`)
                                         .then(function (response){
                                         return response.data
                                     })
@@ -61,7 +61,7 @@ export default function routes(db){
             const brandMenu = req.body.brand
             const shoe_sizes = req.body.size
             if(brandMenu && shoe_sizes){
-                const filtered = await axios.get(`http://localhost:3000/api/shoes/brand/${brandMenu}/size/${shoe_sizes}`)
+                const filtered = await axios.get( process.env.API_ENDPOINT || `http://localhost:3000/api/shoes/brand/${brandMenu}/size/${shoe_sizes}`)
                                             .then(function (result){
                                                 return result.data
                                             })
