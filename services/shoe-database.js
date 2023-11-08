@@ -24,7 +24,7 @@ export default function shoeQueries(db){
     }
 
     async function getShoesByColor(color){
-        return await db.manyOrNone(` SELECT * FROM shoes WHERE color LIKE %$1%`,['{color}'])
+        return await db.manyOrNone(` SELECT * FROM shoes WHERE color LIKE $1`,['%${color}%'])
     }
 
     return{
