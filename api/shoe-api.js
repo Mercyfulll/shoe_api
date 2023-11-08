@@ -121,11 +121,29 @@ export default function shoesAPI(shoeQueries){
 
     }
 
+    async function getShoeByColor(req, res){
+        try {
+            const shoe_color = req.params.color
+            const displayShoesByColor = await shoeQueries.getShoesByColor(shoe_color)
+
+            res.json({
+                status : 'success',
+                displayShoesByColor
+            })
+        } catch (error) {
+            res.status(500).json({
+                error : "Error displaying shoe by Color",
+                details : error.message
+            })
+        }
+    }
+
     return{
         addShoe,
         showAllShoe,
         getShoeByBrand,
         getShoeBySize,
+        getShoeByColor,
         getShoeByBrandAndSize
     }
 }

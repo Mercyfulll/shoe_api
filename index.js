@@ -40,6 +40,7 @@ app.get('/api/shoes/size/:size',shoeapi.getShoeBySize)
 app.get('/api/shoes/brand/:brandname',shoeapi.getShoeByBrand)
 app.get('/api/shoes',shoeapi.showAllShoe)
 app.post('/api/shoes', shoeapi.addShoe)
+app.get('/api/shoes/color/:color',shoeapi.getShoeByColor)
 
 var PORT = process.env.PORT || 3000
 
