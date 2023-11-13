@@ -20,8 +20,6 @@ export default function shoesAPI(shoeQueries){
             // Insert the shoe into the database
             const insertShoe = await shoeQueries.addShoes(shoe);
 
-            console.log('Inserted shoe:', shoe)
-
             // Respond with a success message
             res.json({
                 status: 'Shoe added successfully',
@@ -138,12 +136,68 @@ export default function shoesAPI(shoeQueries){
         }
     }
 
+    async function getOneShoe(req,res){
+        try {
+            const shoeName = req.params.shoe
+            
+            const shoeSpecs = await shoeQueries.getOneShoes(shoeName)
+
+            res.json({
+                status : 'success',
+                shoeSpecs
+            })
+        } catch (error) {
+            res.status(500).json({
+                error: "Error displaying the shoe",
+                details: error.message
+            })
+        }
+    }
+     
+    async function getShoeByGender(req,res){
+        try {
+            const genderW= req.params.gender
+            
+            const genderShoe = await shoeQueries.getShoeByGender(genderW)
+
+            res.json({
+                status: 'success',
+                genderShoe
+            })
+        } catch (error){
+            res.status(500).json({
+                error: "Error",
+                details: error.message
+        })
+    }
+    }
+
+    async function filterByAll(req,res){
+        try {
+           const allOptions = await shoeQueries.getShoesBySizeBrandColor(brand,size,color)
+
+           res.json({
+                error: "success",
+                allOptions 
+           })
+        } catch (error) {
+            res.status(500).json({
+                error: "Error",
+                details: error.message
+            })
+            
+        }
+    }
+
     return{
         addShoe,
         showAllShoe,
         getShoeByBrand,
         getShoeBySize,
         getShoeByColor,
-        getShoeByBrandAndSize
+        getShoeByBrandAndSize,
+        getOneShoe,
+        getShoeByGender,
+        filterByAll
     }
 }

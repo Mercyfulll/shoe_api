@@ -16,15 +16,35 @@ GET http://localhost:3000/api/shoes/size/5
 GET http://localhost:3000/api/shoes/brand/Puma/size/5
 
 
+### GET shoe spec
+GET http://localhost:3000/api/shoes/shoe/ADIMATIC%20SHOES
+
 ###
 POST http://localhost:3000/api/shoes
 Content-Type: application/json
 
 {
-    "shoename":"ADIMATIC SHOES",
+   "shoename":"ADIMATIC SHOES",
     "color":"Charcoal Solid Grey / Stone / Dgh Solid Grey",
     "brand":"Adidas","price":"2799.00",
     "size":7,
     "stock":3,
     "image_url":"https://assets.adidas.com/images/w_1880,f_auto,q_auto/985cbe5bb82646cd826aaf3400b23d87_9366/HP6771_06_standard.jpg"
 }
+
+################################################
+
+# User APi 
+
+### POST a user 
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username":"al",
+    "email":"a",
+    "user_password":"a"
+}
+
+### GET a user 
+GET http://localhost:3000/users

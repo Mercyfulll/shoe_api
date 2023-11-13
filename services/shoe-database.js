@@ -8,7 +8,7 @@ export default function shoeQueries(db){
     )}
 
     async function showAllShoes(){
-        return await db.manyOrNone(`SELECT DISTINCT * FROM shoes`)
+        return await db.manyOrNone(`SELECT * FROM shoes`)
     }
 
     async function getShoesByBrand(brandname){
@@ -20,19 +20,33 @@ export default function shoeQueries(db){
     }
 
     async function getShoesByBrandAndSize(brandname, size){
-        return await db.manyOrNone(`SELECT * FROM shoes WHERE brand = $1 AND size = $2`,[brandname,size])
+      return await db.manyOrNone(`SELECT * FROM shoes WHERE brand = $1 AND size = $2`,[brandname,size])
     }
 
     async function getShoesByColor(color){
-        return await db.manyOrNone(` SELECT * FROM shoes WHERE color LIKE $1`,['%${color}%'])
+      return await db.manyOrNone(`SELECT * FROM shoes WHERE color LIKE $1`,[`%${color}%`])
+      
     }
 
+    async function getOneShoes(shoename){
+        return await db.oneOrNone(`SELECT * FROM shoes WHERE shoename = $1`,[shoename])
+    }
+    async function getShoeByGender(gender){
+        return await db.manyOrNone(`SELECT * FROM shoes WHERE gender = $1`,[gender])
+    }
+
+    async function getShoesBySizeBrandColor(brand,size,color){
+        return await db.manyOrNone(`SELECT * FROM shoes WHERE brand = $1 AND size = $2 AND color LIKE $3`,[brand,size,`%${color}%`])
+    }
     return{
         addShoes,
         showAllShoes,
         getShoesByBrand,
         getShoesBySize,
         getShoesByBrandAndSize,
-        getShoesByColor
+        getShoesByColor,
+        getOneShoes,
+        getShoeByGender,
+        getShoesBySizeBrandColor
     }
 }
