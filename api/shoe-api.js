@@ -174,10 +174,19 @@ export default function shoesAPI(shoeQueries){
 
     async function filterByAll(req,res){
         try {
-           const allOptions = await shoeQueries.getShoesBySizeBrandColor(brand,size,color)
+            const brandOfShoe = req.params.brandname
+            const sizeOfShoe = req.params.size
+            const colorOfShoe = req.params.color
+
+            console.log('Brand:', brandOfShoe);
+            console.log('Size:', sizeOfShoe);
+            console.log('Color:', colorOfShoe);
+
+
+            const allOptions = await shoeQueries.getShoesBySizeBrandColor(brandOfShoe,sizeOfShoe,colorOfShoe)
 
            res.json({
-                error: "success",
+                status: "success",
                 allOptions 
            })
         } catch (error) {
@@ -186,6 +195,25 @@ export default function shoesAPI(shoeQueries){
                 details: error.message
             })
             
+        }
+    }
+
+    async function getShoeById(req, res){
+        try {
+            const shoe_id = req.params.itemId
+
+            const shoeInCart = await shoeQueries.getShoeById(shoe_id)
+
+            res.json({
+                status : 'success',
+                shoeInCart
+            })
+
+        } catch (error) {
+            res.status(500).json({
+                error : 'error',
+                details : error.message
+            })
         }
     }
 
@@ -198,6 +226,7 @@ export default function shoesAPI(shoeQueries){
         getShoeByBrandAndSize,
         getOneShoe,
         getShoeByGender,
-        filterByAll
+        filterByAll,
+        getShoeById
     }
 }

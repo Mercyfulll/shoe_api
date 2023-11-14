@@ -40,15 +40,21 @@ app.use(bodyParser.json())
 app.post('/api/shoes/sold/:id',function(req,res){
     res.render('index')
 })
-app.get('/api/shoes/gender/:gender',shoeapi.getShoeByGender)
 
-app.get('/api/shoes/shoe/:shoe',shoeapi.getOneShoe)
+app.get('/api/shoes/brand/:brandname/size/:size/color/:color',shoeapi.filterByAll)
 app.get('/api/shoes/brand/:brandname/size/:size',shoeapi.getShoeByBrandAndSize)
-app.get('/api/shoes/size/:size',shoeapi.getShoeBySize)
 app.get('/api/shoes/brand/:brandname',shoeapi.getShoeByBrand)
-app.get('/api/shoes',shoeapi.showAllShoe)
+app.get('/api/shoes/gender/:gender',shoeapi.getShoeByGender)
 app.get('/api/shoes/color/:color',shoeapi.getShoeByColor)
+app.get('/api/shoes/size/:size',shoeapi.getShoeBySize)
+app.get('/api/shoes/shoe/:shoe',shoeapi.getOneShoe)
+app.get('/api/shoes/:itemId', shoeapi.getShoeById)
+app.get('/api/shoes',shoeapi.showAllShoe)
+
+
+app.post('/api/shoes/:itemId', shoeapi.getShoeById)
 app.post('/api/shoes', shoeapi.addShoe)
+
 
 //USer APi routes
 app.get('/users', async function(req, res){

@@ -14,7 +14,7 @@ CREATE TABLE shoes (
 CREATE TABLE users(
     id SERIAL NOT NULL PRIMARY KEY,
 	username TEXT UNIQUE NOT NULL,
-    email TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
 	user_password TEXT NOT NULL
 
 );

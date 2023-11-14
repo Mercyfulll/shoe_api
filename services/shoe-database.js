@@ -38,6 +38,9 @@ export default function shoeQueries(db){
     async function getShoesBySizeBrandColor(brand,size,color){
         return await db.manyOrNone(`SELECT * FROM shoes WHERE brand = $1 AND size = $2 AND color LIKE $3`,[brand,size,`%${color}%`])
     }
+    async function getShoeById(id){
+        return await db.oneOrNone(`SELECT * FROM shoes WHERE id = $1`,[id])
+    }
     return{
         addShoes,
         showAllShoes,
@@ -47,6 +50,7 @@ export default function shoeQueries(db){
         getShoesByColor,
         getOneShoes,
         getShoeByGender,
-        getShoesBySizeBrandColor
+        getShoesBySizeBrandColor,
+        getShoeById
     }
 }
