@@ -21,10 +21,19 @@ CREATE TABLE users(
 
 CREATE TABLE orders(
     id SERIAL NOT NULL PRIMARY KEY,
-    users_id INT REFERENCES users (id),
-    shoes_id INT REFERENCES shoes (id),
-
+    order_cart_id NUMERIC,
+    qty NUMERIC,
+    username TEXT UNIQUE NOT NULL,
+    shoes_id INT REFERENCES shoes (id)
 );
+
+CREATE TABLE ordercart(
+    id SERIAL NOT NULL PRIMARY KEY,
+    order_code TEXT NOT NULL,
+    cart_status TEXT NOT NULL, 
+    username TEXT NOT NULL
+);
+
 
 INSERT INTO shoes (shoename, color, brand, price, size, stock, image_url, gender, size_url)
 VALUES

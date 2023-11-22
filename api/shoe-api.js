@@ -3,7 +3,7 @@ export default function shoesAPI(shoeQueries){
     async function addShoe(req, res) {
         try {
             // Destructure the relevant properties from req.body
-            const { shoename,color, brand, price, size, stock, image_url } = req.body;
+            const { shoename,color, brand, price, size, stock, image_url, gender, size_url } = req.body;
             
 
             // Create an object to represent the shoe
@@ -14,7 +14,9 @@ export default function shoesAPI(shoeQueries){
                 price,
                 size,
                 stock,
-                image_url
+                image_url,
+                gender,
+                size_url
             };
 
             // Insert the shoe into the database
@@ -200,7 +202,7 @@ export default function shoesAPI(shoeQueries){
 
     async function getShoeById(req, res){
         try {
-            const shoe_id = req.params.itemId
+            const shoe_id = req.params.shoeid
 
             const shoeInCart = await shoeQueries.getShoeById(shoe_id)
 
@@ -208,6 +210,20 @@ export default function shoesAPI(shoeQueries){
                 status : 'success',
                 shoeInCart
             })
+
+        } catch (error) {
+            res.status(500).json({
+                error : 'error',
+                details : error.message
+            })
+        }
+    }
+
+    async function getShoeStock(req, res){
+        try {
+            const shoeId = req.params.shoeid
+
+            const shoe = await shoeQueries.getStockForShoe(shoeId)
 
         } catch (error) {
             res.status(500).json({

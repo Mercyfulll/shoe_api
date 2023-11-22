@@ -5,8 +5,10 @@ import bodyParser from "body-parser";
 import pgPromise from "pg-promise";
 import shoesAPI from './api/shoe-api.js';
 import userAPI from './api/user-api.js';
+import ordersAPI from './api/oders-api.js';
 import shoeQueries from './services/shoe-database.js';
 import usersQueries from './services/user-database.js';
+import ordersQueries from './services/oders-database.js';
 
 var app = express()
 var pgp = pgPromise();
@@ -18,6 +20,8 @@ var shoedb = shoeQueries(db)
 var shoeapi = shoesAPI(shoedb)
 var userdb = usersQueries(db)
 var userapi = userAPI(userdb)
+var odersdb = ordersQueries(db)
+var ordersapi = ordersAPI(odersdb)
 
 // use the express.static built-in middleware to serve static file 'css'
 app.use(express.static(('public')))
@@ -48,7 +52,7 @@ app.get('/api/shoes/gender/:gender',shoeapi.getShoeByGender)
 app.get('/api/shoes/color/:color',shoeapi.getShoeByColor)
 app.get('/api/shoes/size/:size',shoeapi.getShoeBySize)
 app.get('/api/shoes/shoe/:shoe',shoeapi.getOneShoe)
-app.get('/api/shoes/:itemId', shoeapi.getShoeById)
+app.get('/api/shoes/:shoeid', shoeapi.getShoeById)
 app.get('/api/shoes',shoeapi.showAllShoe)
 
 
@@ -56,11 +60,20 @@ app.post('/api/shoes/:itemId', shoeapi.getShoeById)
 app.post('/api/shoes', shoeapi.addShoe)
 
 
-//USer APi routes
+//User APi routes
+app.get('/api/user/:username', userapi.getHashedPassword)
+app.post('/users/user', userapi.checkIfUserAlreadyExist)
 app.get('/users', async function(req, res){
   res.json({status : 'success'})
 })
 app.post('/users',userapi.registerTheUser)
+
+
+//Orders API routes 
+
+app.get('/api/order-cart/create', ordersapi.createCart);
+app.get('/api/order', ordersapi.getCart)
+app.post('/api/order', ordersapi.addToCArt)
 
 var PORT = process.env.PORT || 3000
 

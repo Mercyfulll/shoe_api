@@ -2,9 +2,10 @@ export default function shoeQueries(db){
 
     async function addShoes(shoe){
         await db.none(
-            `INSERT INTO shoes (shoename, color, brand, price, size, stock, image_url)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-            [shoe.shoename, shoe.color, shoe.brand, shoe.price, shoe.size, shoe.stock, shoe.image_url]
+            `INSERT INTO shoes 
+            (shoename, color, brand, price, size, stock, image_url,gender,size_url)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+            [shoe.shoename, shoe.color, shoe.brand, shoe.price, shoe.size, shoe.stock, shoe.image_url,shoe.gender,shoe.size_url]
     )}
 
     async function showAllShoes(){
@@ -41,6 +42,10 @@ export default function shoeQueries(db){
     async function getShoeById(id){
         return await db.oneOrNone(`SELECT * FROM shoes WHERE id = $1`,[id])
     }
+
+    async function getStockForShoe(id){
+        return await db.oneOrNone(`SELECT stock FROM shoes WHERE id = $1`,[id])
+    }
     return{
         addShoes,
         showAllShoes,
@@ -51,6 +56,7 @@ export default function shoeQueries(db){
         getOneShoes,
         getShoeByGender,
         getShoesBySizeBrandColor,
-        getShoeById
+        getShoeById,
+        getStockForShoe
     }
 }
